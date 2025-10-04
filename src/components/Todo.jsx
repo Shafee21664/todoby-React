@@ -16,7 +16,7 @@ export default function Todo({ todo, onChangeTodo, onDeleteTodo }) {
           })
         }
       />
-      <button>Save</button>
+      <button onClick={() => setisEditing(false)}>Save</button>
     </>
   ) : (
     <>
@@ -27,7 +27,17 @@ export default function Todo({ todo, onChangeTodo, onDeleteTodo }) {
 
   return (
     <>
-      <input type="checkbox" checked={todo.done} />
+      <input
+        type="checkbox"
+        checked={todo.done}
+        onChange={(e) =>
+          onChangeTodo({
+            id: todo.id,
+            title: todo.title,
+            done: e.target.checked,
+          })
+        }
+      />
       {todoContent}
       <button>Delete</button>
     </>
