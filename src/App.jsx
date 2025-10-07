@@ -1,41 +1,36 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import "./App.css";
 import AddTodo from "./components/Add_todo";
 import TodoList from "./components/Todo_list";
 import initioalTodos from "../data/initialTodos";
-import getNextTodoId from "./Utils/getNextRidiid";
+// import getNextTodoId from "./Utils/getNextRidiid";
+import todoreReduce from "../reducers/todisReducers";
 
 function App() {
-  const [todos, setTodos] = useState(initioalTodos);
+  const [todos, dispatch] = useReducer(todoreReduce, initioalTodos);
 
   const handleChangeTodo = (todo) => {
-    const changeTodos = todos.map((t) => {
-      if (t.id === todo.id) {
-        return {
-          ...t,
-          title: todo.title,
-          done: todo.done,
-        };
-      }
-      return t;
+    dispatch({
+      type: "change",
+      todo,
     });
-
-    setTodos(changeTodos);
+    // chitkar
+    // const changeTodos =
+    // setTodos(changeTodos);
   };
 
-  const hendleDeleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const handleDeleteTodo = (id) => {
+    dispatch({
+      type: "delete",
+      id,
+    });
   };
 
   const handelAddTodo = (title) => {
-    setTodos([
-      ...todos,
-      {
-        id: getNextTodoId(todos),
-        title,
-        done: false,
-      },
-    ]);
+    dispatch({
+      type: "add",
+      title,
+    });
   };
 
   return (
@@ -46,7 +41,7 @@ function App() {
         <TodoList
           todos={todos}
           onChangeTodo={handleChangeTodo}
-          onDeleteTodo={hendleDeleteTodo}
+          onDeleteTodo={handleDeleteTodo}
         />
       </div>
     </>

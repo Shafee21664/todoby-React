@@ -39,7 +39,7 @@ export default function Todo({ todo, onChangeTodo, onDeleteTodo }) {
         }
       />
       {todoContent}
-      <button>Delete</button>
+      <button onClick={() => onDeleteTodo(todo.id)}>Delete</button>
     </>
   );
 }
